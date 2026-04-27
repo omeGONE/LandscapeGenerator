@@ -34,6 +34,7 @@ def Render(p, height, horizon, scale_height, distance, screen_width, screen_heig
         dx = (pright_x - pleft_x) / screen_width
 
         for i in range(screen_width):
+            print(pleft_x, pleft_y)
             map_x = int(round(pleft_x)) % W
             map_y = int(round(pleft_y)) % H
 
@@ -52,7 +53,7 @@ def Render(p, height, horizon, scale_height, distance, screen_width, screen_heig
     return framebuffer
 
 
-frame = Render(Point(600, 0), 500, 120, 550, 2000, 800, 600)
+frame = Render(Point(600, 300), 500, 120, 550, 2000, 800, 600)
 
 plt.figure(figsize=(8, 6))
 plt.imshow(frame)
