@@ -34,9 +34,12 @@ def Render(p, height, horizon, scale_height, distance, screen_width, screen_heig
         dx = (pright_x - pleft_x) / screen_width
 
         for i in range(screen_width):
-            print(pleft_x, pleft_y)
-            map_x = int(round(pleft_x)) % W
-            map_y = int(round(pleft_y)) % H
+            map_x = int(round(pleft_x))
+            map_y = int(round(pleft_y))
+
+            if map_x < 0 or map_x >= W or map_y < 0 or map_y >= H:
+                pleft_x += dx
+                continue
 
             h_val = heightmap[map_x, map_y]
             y_screen = int((height - h_val) / z * scale_height + horizon)
@@ -47,16 +50,14 @@ def Render(p, height, horizon, scale_height, distance, screen_width, screen_heig
                 continue
 
             framebuffer[y_screen:, i, :] = colormap[map_x, map_y]
-
             pleft_x += dx
 
     return framebuffer
 
-
-frame = Render(Point(600, 300), 500, 120, 550, 2000, 800, 600)
-
-plt.figure(figsize=(8, 6))
-plt.imshow(frame)
-plt.axis('off')
-plt.tight_layout()
-plt.show()
+def visualise():
+    frame = Render(Point(512, 1025), 100, 120, 550, 3000, 800, 600)
+    plt.figure(figsize=(8, 6))
+    plt.imshow(frame)
+    plt.axis('off')
+    plt.tight_layout()
+    plt.show()
